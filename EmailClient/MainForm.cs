@@ -6,7 +6,6 @@ namespace EmailClient
 {
     public partial class MainForm : Form
     {
-        const string name = "Sergey Marchenko";
         const string smtp_address = "smtp.gmail.com";
         const int smtp_port = 465;
         const string imap_address = "imap.gmail.com";
@@ -14,7 +13,7 @@ namespace EmailClient
         const string body_text_path = "bodyText.txt";
         const string credential_path = "credential.txt";
 
-        string userName, password;
+        string name, userName, password;
         MailClient mailClient;
         string bodyText;
 
@@ -22,14 +21,15 @@ namespace EmailClient
         {
             InitializeComponent();
             mailClient = new MailClient(smtp_address, smtp_port, imap_address, imap_port);
-            (userName, password) = ("", "");
+            (name, userName, password) = ("", "", "");
             if (File.Exists(credential_path))
             {
                 string[] credential = File.ReadAllLines(credential_path);
-                if (credential.Length > 1)
+                if (credential.Length > 2)
                 {
-                    userName = credential[0];
-                    password = credential[1];
+                    name = credential[0];
+                    userName = credential[1];
+                    password = credential[2];
                 }
             }
             if (File.Exists(body_text_path))
